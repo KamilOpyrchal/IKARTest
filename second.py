@@ -1,6 +1,13 @@
 from ultralytics import YOLO
+import os 
+import glob
 
 
-model = YOLO("yolo26n-pose.pt") 
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
-results = model.track("trzy.mp4", save=True, show=True, persist=True)
+template = os.path.join(current_dir,'videos', '*.mp4')
+video_list = glob.glob(template)
+
+model = YOLO("yolo26m-pose.pt") 
+for vid in video_list:
+    results = model.track(vid, save=True, show=True, persist=True)
